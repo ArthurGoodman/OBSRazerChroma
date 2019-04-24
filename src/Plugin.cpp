@@ -4,6 +4,8 @@
 
 #include <obs-frontend-api.h>
 #include <obs-module.h>
+#include <util/config-file.h>
+#include <util/platform.h>
 
 #include "AnimationController.hpp"
 
@@ -25,6 +27,7 @@ void process_frontend_event(obs_frontend_event event, void *)
         g_animation_controller->reset();
         break;
 
+    // A workaround for delayed initialization problem
     case OBS_FRONTEND_EVENT_FINISHED_LOADING:
         std::thread{[]() {
             std::this_thread::sleep_for(std::chrono::milliseconds{500});
@@ -40,7 +43,8 @@ void process_frontend_event(obs_frontend_event event, void *)
 
 bool obs_module_load()
 {
-    g_animation_controller = std::make_shared<OBSRazerChroma::CAnimationController>();
+    OBSRazerChroma::CConfig config;
+    g_animation_controller = std::make_shared<OBSRazerChroma::CAnimationController>(config);
     obs_frontend_add_event_callback(process_frontend_event, nullptr);
     return true;
 }

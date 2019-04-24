@@ -10,7 +10,7 @@ namespace OBSRazerChroma {
 
 class CChromaSDK final
 {
-public: // methods
+public:
     explicit CChromaSDK();
     ~CChromaSDK();
 
@@ -49,7 +49,7 @@ public: // methods
     RZRESULT UnregisterEventNotification();
     RZRESULT QueryDevice(RZDEVICEID DeviceId, ChromaSDK::DEVICE_INFO_TYPE &DeviceInfo);
 
-private: // types
+private:
     using InitFunc = RZRESULT (*)();
     using UnInitFunc = RZRESULT (*)();
     using CreateEffectFunc = RZRESULT (*)(
@@ -76,7 +76,7 @@ private: // types
     using QueryDeviceFunc =
         RZRESULT (*)(RZDEVICEID DeviceId, ChromaSDK::DEVICE_INFO_TYPE &DeviceInfo);
 
-private: // fields
+private:
     HMODULE m_module = nullptr;
 
     InitFunc m_Init = nullptr;

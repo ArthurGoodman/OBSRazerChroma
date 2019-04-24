@@ -5,22 +5,25 @@
 #include <thread>
 
 #include "ChromaSDK.hpp"
+#include "Config.hpp"
 
 namespace OBSRazerChroma {
 
 class CAnimationController final
 {
-public: // methods
-    explicit CAnimationController();
+public:
+    explicit CAnimationController(const CConfig &config);
     ~CAnimationController();
 
     void reset();
     void blink();
 
-private: // methods
+private:
     void animationThread();
 
-private: // fields
+private:
+    const CConfig m_config;
+
     CChromaSDK m_sdk;
 
     std::thread m_animation_thread;

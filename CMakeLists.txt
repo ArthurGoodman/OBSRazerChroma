@@ -5,6 +5,7 @@ add_subdirectory(third_party/chroma_sdk)
 set(${PROJECT_NAME}_SOURCES
     src/Plugin.cpp
     src/ChromaSDK.cpp
+    src/Config.cpp
     src/AnimationController.cpp
     )
 
