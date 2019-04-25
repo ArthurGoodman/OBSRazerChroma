@@ -1,5 +1,6 @@
 #include "Config.hpp"
 
+#include <algorithm>
 #include <cstdio>
 #include <memory>
 #include <string>
@@ -21,6 +22,9 @@ static constexpr const char *c_bg_color_option = "background_color";
 static constexpr const char *c_fg_color_option = "blink_color";
 static constexpr const char *c_interval_option = "blink_interval_msec";
 static constexpr const char *c_blink_option = "blink";
+
+static constexpr uint32_t c_min_interval = 100;
+static constexpr uint32_t c_max_interval = 10000;
 
 static constexpr ColorRGB c_default_bg_color = 0xc8c8c8;
 static constexpr ColorRGB c_default_fg_color = 0xff0000;
@@ -94,6 +98,8 @@ CConfig::CConfig()
     stringToColor(config_get_string(config, c_main_section, c_fg_color_option), m_fg_color);
     m_interval = static_cast<uint32_t>(config_get_uint(config, c_main_section, c_interval_option));
     m_blink = config_get_bool(config, c_main_section, c_blink_option);
+
+    m_interval = std::max(c_min_interval, std::min(m_interval, c_max_interval));
 
     config_set_string(config, c_main_section, c_bg_color_option, colorToString(m_bg_color).c_str());
     config_set_string(config, c_main_section, c_fg_color_option, colorToString(m_fg_color).c_str());
