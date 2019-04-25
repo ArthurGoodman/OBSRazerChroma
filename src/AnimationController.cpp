@@ -1,12 +1,23 @@
 #include "AnimationController.hpp"
 
+namespace {
+
+using OBSRazerChroma::ColorRGB;
+
+constexpr COLORREF rgbToBgr(ColorRGB c)
+{
+    return (c & 0xff) << 16 | (c & 0xff00) | (c & 0xff0000) >> 16;
+}
+
+} // anonymous namespace
+
 namespace OBSRazerChroma {
 
 CAnimationController::CAnimationController(const CConfig &config)
     : m_config{config}
 {
-    const COLORREF bg_color = m_config.getBgColor();
-    const COLORREF fg_color = m_config.getFgColor();
+    const COLORREF bg_color = rgbToBgr(m_config.getBgColor());
+    const COLORREF fg_color = rgbToBgr(m_config.getFgColor());
 
     ChromaSDK::Keyboard::CUSTOM_KEY_EFFECT_TYPE key_effect{};
 

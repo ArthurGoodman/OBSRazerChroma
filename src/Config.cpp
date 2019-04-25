@@ -11,7 +11,7 @@
 
 namespace {
 
-using OBSRazerChroma::ColorBGR;
+using OBSRazerChroma::ColorRGB;
 
 static constexpr const char *c_config_name = "config.ini";
 
@@ -21,28 +21,20 @@ static constexpr const char *c_bg_color_option = "background_color";
 static constexpr const char *c_fg_color_option = "blink_color";
 static constexpr const char *c_interval_option = "blink_interval_msec";
 
-static constexpr ColorBGR c_default_bg_color = 0xc8c8c8;
-static constexpr ColorBGR c_default_fg_color = 0x0000ff;
+static constexpr ColorRGB c_default_bg_color = 0xc8c8c8;
+static constexpr ColorRGB c_default_fg_color = 0xff0000;
 static constexpr uint32_t c_default_interval = 750;
 
-constexpr ColorBGR swapRedAndBlue(ColorBGR c)
-{
-    return (c & 0xff) << 16 | (c & 0xff00) | (c & 0xff0000) >> 16;
-}
-
-std::string colorToString(ColorBGR c)
+std::string colorToString(ColorRGB c)
 {
     char buf[8];
-    std::snprintf(buf, sizeof(buf), "#%06X", swapRedAndBlue(c));
+    std::snprintf(buf, sizeof(buf), "#%06X", c);
     return buf;
 }
 
-void stringToColor(const std::string &str, ColorBGR &c)
+void stringToColor(const std::string &str, ColorRGB &c)
 {
-    if (std::sscanf(str.c_str(), "#%x", &c) > 0)
-    {
-        c = swapRedAndBlue(c);
-    }
+    std::sscanf(str.c_str(), "#%x", &c);
 }
 
 } // anonymous namespace
@@ -106,12 +98,12 @@ CConfig::CConfig()
     config_save(config);
 }
 
-ColorBGR CConfig::getBgColor() const
+ColorRGB CConfig::getBgColor() const
 {
     return m_bg_color;
 }
 
-ColorBGR CConfig::getFgColor() const
+ColorRGB CConfig::getFgColor() const
 {
     return m_fg_color;
 }
