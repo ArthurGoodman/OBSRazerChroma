@@ -20,6 +20,7 @@ static constexpr const char *c_main_section = "general";
 static constexpr const char *c_bg_color_option = "background_color";
 static constexpr const char *c_fg_color_option = "blink_color";
 static constexpr const char *c_interval_option = "blink_interval_msec";
+static constexpr const char *c_blink_option = "blink";
 
 static constexpr ColorRGB c_default_bg_color = 0xc8c8c8;
 static constexpr ColorRGB c_default_fg_color = 0xff0000;
@@ -45,6 +46,7 @@ CConfig::CConfig()
     : m_bg_color{c_default_bg_color}
     , m_fg_color{c_default_fg_color}
     , m_interval{c_default_interval}
+    , m_blink{true}
 {
     char *config_dir_path = nullptr;
     char *config_path = nullptr;
@@ -86,14 +88,17 @@ CConfig::CConfig()
     config_set_default_string(
         config, c_main_section, c_fg_color_option, colorToString(m_fg_color).c_str());
     config_set_default_uint(config, c_main_section, c_interval_option, m_interval);
+    config_set_default_bool(config, c_main_section, c_blink_option, m_blink);
 
     stringToColor(config_get_string(config, c_main_section, c_bg_color_option), m_bg_color);
     stringToColor(config_get_string(config, c_main_section, c_fg_color_option), m_fg_color);
-    m_interval = config_get_uint(config, c_main_section, c_interval_option);
+    m_interval = static_cast<uint32_t>(config_get_uint(config, c_main_section, c_interval_option));
+    m_blink = config_get_bool(config, c_main_section, c_blink_option);
 
     config_set_string(config, c_main_section, c_bg_color_option, colorToString(m_bg_color).c_str());
     config_set_string(config, c_main_section, c_fg_color_option, colorToString(m_fg_color).c_str());
     config_set_uint(config, c_main_section, c_interval_option, m_interval);
+    config_set_bool(config, c_main_section, c_blink_option, m_blink);
 
     config_save(config);
 }
@@ -111,6 +116,11 @@ ColorRGB CConfig::getFgColor() const
 uint32_t CConfig::getInterval() const
 {
     return m_interval;
+}
+
+bool CConfig::getBlink() const
+{
+    return m_blink;
 }
 
 } // namespace OBSRazerChroma

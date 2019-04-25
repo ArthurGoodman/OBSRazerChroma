@@ -32,7 +32,7 @@ private:
     bool m_abort_animation = false;
 
     RZEFFECTID m_normal_id = GUID_NULL;
-    RZEFFECTID m_red_id = GUID_NULL;
+    RZEFFECTID m_active_id = GUID_NULL;
 
     std::mutex m_access_mutex;
 };

@@ -32,7 +32,7 @@ CAnimationController::CAnimationController(const CConfig &config)
         }
     }
 
-    m_sdk.CreateKeyboardEffect(ChromaSDK::Keyboard::CHROMA_CUSTOM_KEY, &key_effect, &m_red_id);
+    m_sdk.CreateKeyboardEffect(ChromaSDK::Keyboard::CHROMA_CUSTOM_KEY, &key_effect, &m_active_id);
 
     ChromaSDK::Keyboard::STATIC_EFFECT_TYPE static_effect{};
     static_effect.Color = bg_color;
@@ -42,7 +42,7 @@ CAnimationController::CAnimationController(const CConfig &config)
 
 CAnimationController::~CAnimationController()
 {
-    m_sdk.DeleteEffect(m_red_id);
+    m_sdk.DeleteEffect(m_active_id);
     m_sdk.DeleteEffect(m_normal_id);
 }
 
@@ -68,7 +68,14 @@ void CAnimationController::blink()
 {
     std::unique_lock<std::mutex> lock(m_access_mutex);
 
-    m_animation_thread = std::thread{std::bind(&CAnimationController::animationThread, this)};
+    if (m_config.getBlink())
+    {
+        m_animation_thread = std::thread{std::bind(&CAnimationController::animationThread, this)};
+    }
+    else
+    {
+        m_sdk.SetEffect(m_active_id);
+    }
 }
 
 void CAnimationController::animationThread()
@@ -82,7 +89,7 @@ void CAnimationController::animationThread()
         }
         else
         {
-            m_sdk.SetEffect(m_red_id);
+            m_sdk.SetEffect(m_active_id);
         }
 
         state = !state;
