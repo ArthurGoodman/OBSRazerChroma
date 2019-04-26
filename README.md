@@ -24,18 +24,11 @@ key=F12
 ```
 
 Key names:
-```
-"Escape", "F1", ..., "F12",
-"0", ..., "9", "A", ..., "Z",
-"NumLock", "Num0", ..., "Num9",
-"NumDivide", "NumMultiply", "NumSubtract",
-"NumAdd", "NumEnter", "NumDecimal",
-"PrintScreen", "ScrollLock", "Pause",
-"Insert", "Home", "PageUp",
-"Delete", "End", "PageDown",
-"Up", "Left", "Down", "Right",
-"Tab", "CapsLock", "Backspace", "Enter",
-"LCtrl", "LWin", "LAlt", "Space", "RAlt", "Fn",
-"RMenu", "RCtrl", "LShift", "RShift",
-"~", "-", "=", "[", "]", "\", ";", "'", ",", ".", "/"
-```
+
+|  Escape  |  F1  |  F2  | F3 | F4 |   F5  | F6 | F7 | F8 | F9 |  F10 | F11 |  F12  | PrintScreen | ScrollLock | Pause |          |         |           |             |             |
+|:--------:|:----:|:----:|:--:|:--:|:-----:|:--:|:--:|:--:|:--:|:----:|:---:|:-----:|:-----------:|:----------:|:-----:|:--------:|:-------:|:---------:|:-----------:|:-----------:|
+|   Tilde  |   1  |   2  |  3 |  4 |   5   |  6 |  7 |  8 |  9 |   0  |  -  |   =   |  Backspace  |   Insert   |  Home |  PageUp  | NumLock | NumDivide | NumMultiply | NumSubtract |
+|    Tab   |   Q  |   W  |  E |  R |   T   |  Y |  U |  I |  O |   P  |  [  |   ]   |      \      |   Delete   |  End  | PageDown |   Num7  |    Num8   |     Num9    |    NumAdd   |
+| CapsLock |   A  |   S  |  D |  F |   G   |  H |  J |  K |  L |   ;  |  '  |       |    Enter    |            |       |          |   Num4  |    Num5   |     Num6    |             |
+|  LShift  |   Z  |   X  |  C |  V |   B   |  N |  M |  , |  . |   /  |     |       |    RShift   |            |   Up  |          |   Num1  |    Num2   |     Num3    |   NumEnter  |
+|   LCtrl  | LWin | LAlt |    |    | Space |    |    |    |    | RAlt |  Fn | RMenu |    RCtrl    |    Left    |  Down |   Right  |   Num0  |           |  NumDecimal |             |
