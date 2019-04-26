@@ -1,13 +1,35 @@
 #include "AnimationController.hpp"
 
+#include <map>
+
 namespace {
 
-using OBSRazerChroma::ColorRGB;
+using namespace OBSRazerChroma;
 
 constexpr COLORREF rgbToBgr(ColorRGB c)
 {
     return (c & 0xff) << 16 | (c & 0xff00) | (c & 0xff0000) >> 16;
 }
+
+ChromaSDK::Keyboard::RZKEY keyToRzKey(Key key)
+{
+    static const std::map<Key, ChromaSDK::Keyboard::RZKEY> key_to_rz_key{
+#define X(key, str, rz_key) {key, ChromaSDK::Keyboard::rz_key},
+#include "Keys.def"
+#undef X
+    };
+
+    const auto &it = key_to_rz_key.find(key);
+
+    if (it == key_to_rz_key.end())
+    {
+        return ChromaSDK::Keyboard::RZKEY_INVALID;
+    }
+    else
+    {
+        return it->second;
+    }
+};
 
 } // anonymous namespace
 
@@ -21,8 +43,8 @@ CAnimationController::CAnimationController(const CConfig &config)
 
     ChromaSDK::Keyboard::CUSTOM_KEY_EFFECT_TYPE key_effect{};
 
-    static constexpr ChromaSDK::Keyboard::RZKEY c_key = ChromaSDK::Keyboard::RZKEY_F12;
-    key_effect.Key[HIBYTE(c_key)][LOBYTE(c_key)] = 0x1000000 | fg_color;
+    const ChromaSDK::Keyboard::RZKEY rz_key = keyToRzKey(m_config.getKey());
+    key_effect.Key[HIBYTE(rz_key)][LOBYTE(rz_key)] = 0x1000000 | fg_color;
 
     for (int x = 0; x < ChromaSDK::Keyboard::MAX_ROW; x++)
     {
